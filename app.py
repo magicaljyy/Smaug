@@ -3,12 +3,12 @@
 #----------------------------------------------------------------------------#
 
 from flask import Flask, render_template, request
-from flask.ext.sqlalchemy import SQLAlchemy
 import logging
 from logging import Formatter, FileHandler
 from forms import *
 import os
-import views
+from model.shared import db
+from flask_restful import Api
 
 #----------------------------------------------------------------------------#
 # App Config.
@@ -16,7 +16,7 @@ import views
 
 app = Flask(__name__)
 app.config.from_object('config')
-db = SQLAlchemy(app)
+db.init_app(app)
 # Automatically tear down SQLAlchemy.
 '''
 @app.teardown_request
@@ -47,18 +47,26 @@ if not app.debug:
     app.logger.addHandler(file_handler)
     app.logger.info('errors')
 
+# Import views
+from views import basic
+from views.items import ItemAPI
+
 # Add routes
-app.add_url_rule('/', 'home', view_func=views.home)
+app.add_url_rule('/', 'home', view_func=basic.home)
 
-app.add_url_rule('/about', 'about', view_func=views.about)
+app.add_url_rule('/about', 'about', view_func=basic.about)
 
-app.add_url_rule('/login', 'login', view_func=views.login)
+app.add_url_rule('/login', 'login', view_func=basic.login)
 
-app.add_url_rule('/register', 'register', view_func=views.register)
+app.add_url_rule('/register', 'register', view_func=basic.register)
 
-app.add_url_rule('/forgot', 'forgot', view_func=views.forgot)
+app.add_url_rule('/forgot', 'forgot', view_func=basic.forgot)
 
-app.add_url_rule('/testdb', 'testdb', view_func=views.testdb)
+app.add_url_rule('/testdb', 'testdb', view_func=basic.testdb)
+
+# Add api routes
+api = Api(app)
+api.add_resource(ItemAPI, '/items/<item_id>')
 
 @app.errorhandler(500)
 def internal_error(error):
