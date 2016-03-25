@@ -8,6 +8,7 @@ import logging
 from logging import Formatter, FileHandler
 from forms import *
 import os
+import views
 
 #----------------------------------------------------------------------------#
 # App Config.
@@ -35,58 +36,6 @@ def login_required(test):
             return redirect(url_for('login'))
     return wrap
 '''
-#----------------------------------------------------------------------------#
-# Controllers.
-#----------------------------------------------------------------------------#
-
-
-@app.route('/')
-def home():
-    return render_template('pages/placeholder.home.html')
-
-
-@app.route('/about')
-def about():
-    return render_template('pages/placeholder.about.html')
-
-
-@app.route('/login')
-def login():
-    form = LoginForm(request.form)
-    return render_template('forms/login.html', form=form)
-
-
-@app.route('/register')
-def register():
-    form = RegisterForm(request.form)
-    return render_template('forms/register.html', form=form)
-
-
-@app.route('/forgot')
-def forgot():
-    form = ForgotForm(request.form)
-    return render_template('forms/forgot.html', form=form)
-    
-# Test db
-@app.route('/testdb')
-def testdb():
-  if db.session.query("1").from_statement("SELECT 1").all():
-      return 'It works.'
-  else:
-    return 'Something is broken.'
-
-# Error handlers.
-
-
-@app.errorhandler(500)
-def internal_error(error):
-    #db_session.rollback()
-    return render_template('errors/500.html'), 500
-
-
-@app.errorhandler(404)
-def not_found_error(error):
-    return render_template('errors/404.html'), 404
 
 if not app.debug:
     file_handler = FileHandler('error.log')
@@ -98,10 +47,28 @@ if not app.debug:
     app.logger.addHandler(file_handler)
     app.logger.info('errors')
 
-#----------------------------------------------------------------------------#
-# Launch.
-#----------------------------------------------------------------------------#
+# Add routes
+app.add_url_rule('/', 'home', view_func=views.home)
 
+app.add_url_rule('/about', 'about', view_func=views.about)
+
+app.add_url_rule('/login', 'login', view_func=views.login)
+
+app.add_url_rule('/register', 'register', view_func=views.register)
+
+app.add_url_rule('/forgot', 'forgot', view_func=views.forgot)
+
+app.add_url_rule('/testdb', 'testdb', view_func=views.testdb)
+
+@app.errorhandler(500)
+def internal_error(error):
+    #db_session.rollback()
+    return render_template('errors/500.html'), 500
+
+@app.errorhandler(404)
+def not_found_error(error):
+    return render_template('errors/404.html'), 404
+    
 # Default port:
 if __name__ == '__main__':
     app.run()
