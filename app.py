@@ -49,7 +49,7 @@ if not app.debug:
 
 # Import views
 from views import basic
-from views.items import ItemAPI
+from views.items import ItemAPI, ItemListAPI
 
 # Add routes
 app.add_url_rule('/', 'home', view_func=basic.home)
@@ -67,6 +67,7 @@ app.add_url_rule('/testdb', 'testdb', view_func=basic.testdb)
 # Add api routes
 api = Api(app)
 api.add_resource(ItemAPI, '/items/<item_id>')
+api.add_resource(ItemListAPI, '/items')
 
 @app.errorhandler(500)
 def internal_error(error):
