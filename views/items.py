@@ -24,7 +24,7 @@ class ItemListAPI (Resource):
     return jsonify(json_list=[i.serialize for i in items])
     
   def post(self):
-    item = Item(request.form['name'], request.form['price'])
+    item = Item(**request.form)
     db.session.add(item)
     db.session.commit()
     return jsonify({'success':'1'})

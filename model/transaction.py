@@ -1,17 +1,19 @@
 from model.shared import db
 import datetime
 
-class Item(db.Model):
+class transaction(db.Model):
     __tablename__ = 'item'
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(120), unique=True)
-    price = db.Column(db.Integer)
+    client_id = db.Column(db.Integer, unique=True)
+    item_id = db.Column(db.Integer)
+    unit = db.Column(db.Integer)
+    total = db.Column(db.Integer)
     created = db.Column(db.DateTime, default=datetime.datetime.utcnow)
 
-    def __init__(self, name, price):
-      self.name = name
-      self.price = price
+    def __init__(self, client_id, price):
+        #self.name = name
+        #self.price = price
     
     @property
     def serialize(self):
