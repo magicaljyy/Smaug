@@ -52,7 +52,7 @@ from views import basic
 from views.items import ItemAPI, ItemListAPI, ItemActionAPI
 
 # Add routes
-app.add_url_rule('/', 'home', view_func=basic.home)
+app.add_url_rule('/', 'home', view_func=basic.home, methods=['GET', 'POST'])
 
 app.add_url_rule('/about', 'about', view_func=basic.about)
 

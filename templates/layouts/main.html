@@ -71,7 +71,7 @@
             {% if not session.user_id %}
               <li><a href="{{ url_for('register') }}">Signup</a></li>
               <li><a href="{{ url_for('login') }}">Login</a></li>
-            {% else %}
+            {% elif user %}
               <li><a>{{user.email}}</a></li>
               <li><a>{{user.balance}}</a></li>
               <li><a href="{{ url_for('logout') }}">Logout</a></li>

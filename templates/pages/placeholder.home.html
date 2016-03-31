@@ -4,7 +4,25 @@
 
 <div class="page-header">
   <h1>Items</h1>
-  <button type="button" class="btn btn-primary">Add Balance</button>
+  <div class="input-group">
+  <form method="post" class="form">
+  
+  {{ form.amount(class_ = 'form-control first-input', placeholder = form.amount.label.text, required = true, autofocus = true) }}
+  <span class="input-group-btn">
+    <input type="submit" value="Add Balance" class="btn btn-primary">
+  </span>
+  </form>
+  </div>
+  <div class="input-group">
+    <form method="post" class="form">
+    
+    {{ add_item_form.name(class_ = 'form-control first-input', placeholder = add_item_form.name.label.text, required = true, autofocus = true) }}
+    {{ add_item_form.price(class_ = 'form-control second-input', placeholder = add_item_form.price.label.text, required = true, autofocus = true) }}
+    <span class="input-group-btn">
+      <input type="submit" value="Add item" class="btn btn-primary">
+    </span>
+  </form>
+  </div>
 </div>
 
 <ul class="list-group">

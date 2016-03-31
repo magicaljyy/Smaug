@@ -1,5 +1,5 @@
 from flask_wtf import Form
-from wtforms import TextField, PasswordField
+from wtforms import TextField, PasswordField, FloatField
 from wtforms.validators import DataRequired, EqualTo, Length
 from model.user import User
 # Set your classes here.
@@ -41,3 +41,20 @@ class ForgotForm(Form):
     email = TextField(
         'Email', validators=[DataRequired(), Length(min=6, max=40)]
     )
+
+class AddBalanceForm(Form):
+    amount = FloatField(
+        'Amount', validators=[DataRequired()]
+    )
+    def validate(self):
+     return self.amount.data
+
+class AddItemForm(Form):
+    name = TextField(
+        'Name', validators=[DataRequired()]
+    )
+    price = FloatField(
+        'Price', validators=[DataRequired()]
+    )
+    def validate(self):
+     return self.name.data and self.price.data

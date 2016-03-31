@@ -6,7 +6,7 @@ class Item(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120), unique=True)
-    price = db.Column(db.Integer)
+    price = db.Column(db.Float)
     created = db.Column(db.DateTime, default=datetime.datetime.utcnow)
 
     def __init__(self, name, price):
