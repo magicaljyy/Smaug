@@ -53,7 +53,7 @@
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
             <li {% if request.endpoint == 'home' %} class="active" {% endif %}><a href="{{ url_for('home') }}">Home</a></li>
-            <li {% if request.endpoint == 'about' %} class="active" {% endif %}><a href="{{ url_for('about') }}">This can be our reward center</a></li>
+            <li {% if request.endpoint == 'about' %} class="active" {% endif %}><a href="{{ url_for('about') }}" style="color:#e44f32">This can be our reward center</a></li>
             <li class="dropdown">
               <a class="dropdown-toggle" data-toggle="dropdown">Dashboard <b class="caret"></b></a>
               <ul class="dropdown-menu">
