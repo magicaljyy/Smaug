@@ -1,7 +1,7 @@
 from flask_wtf import Form
 from wtforms import TextField, PasswordField
 from wtforms.validators import DataRequired, EqualTo, Length
-
+from model.user import User
 # Set your classes here.
 
 
@@ -23,9 +23,19 @@ class RegisterForm(Form):
 
 
 class LoginForm(Form):
-    name = TextField('Username', [DataRequired()])
+    email = TextField('Email', [DataRequired()])
     password = PasswordField('Password', [DataRequired()])
-
+    
+    def __init__(self, *args, **kwargs):
+      Form.__init__(self, *args, **kwargs)
+      self.user = None
+      
+    def validate(self):
+      user = User.query.filter_by(email=self.email.data).first()
+      if user.password == self.password.data:
+        self.user = user
+        return True
+      
 
 class ForgotForm(Form):
     email = TextField(

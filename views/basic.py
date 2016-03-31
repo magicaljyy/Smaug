@@ -1,4 +1,4 @@
-from flask import render_template, request
+from flask import render_template, request, flash, session, url_for, redirect
 from forms import *
 
 
@@ -10,6 +10,12 @@ def about():
 
 def login():
     form = LoginForm(request.form)
+    if form.validate_on_submit():
+      flash(u'Successfully logged in as %s' % form.user.email)
+      session['user_id'] = form.user.id
+      session['email'] = form.user.email
+      session['balance'] = form.user.balance
+      return redirect(url_for('home'))
     return render_template('forms/login.html', form=form)
 
 def register():
@@ -19,6 +25,10 @@ def register():
 def forgot():
     form = ForgotForm(request.form)
     return render_template('forms/forgot.html', form=form)
+
+def logout():
+  session.clear()
+  return redirect(url_for('home'))
     
 # Test db
 def testdb():

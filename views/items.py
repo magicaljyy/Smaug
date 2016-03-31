@@ -19,6 +19,7 @@ class ItemAPI(Resource):
     return jsonify({'success':'1'})
 
 class ItemListAPI (Resource):
+  
   def get(self):
     items = Item.query.all()
     return jsonify(json_list=[i.serialize for i in items])
@@ -28,3 +29,8 @@ class ItemListAPI (Resource):
     db.session.add(item)
     db.session.commit()
     return jsonify({'success':'1'})
+
+class ItemActionAPI(Resource):
+  
+  def post(self):
+    return

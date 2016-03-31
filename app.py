@@ -49,14 +49,14 @@ if not app.debug:
 
 # Import views
 from views import basic
-from views.items import ItemAPI, ItemListAPI
+from views.items import ItemAPI, ItemListAPI, ItemActionAPI
 
 # Add routes
 app.add_url_rule('/', 'home', view_func=basic.home)
 
 app.add_url_rule('/about', 'about', view_func=basic.about)
 
-app.add_url_rule('/login', 'login', view_func=basic.login)
+app.add_url_rule('/login', 'login', view_func=basic.login, methods=['GET', 'POST'])
 
 app.add_url_rule('/register', 'register', view_func=basic.register)
 
@@ -64,10 +64,13 @@ app.add_url_rule('/forgot', 'forgot', view_func=basic.forgot)
 
 app.add_url_rule('/testdb', 'testdb', view_func=basic.testdb)
 
+app.add_url_rule('/logout', 'logout', view_func=basic.logout)
+
 # Add api routes
 api = Api(app)
 api.add_resource(ItemAPI, '/items/<item_id>')
 api.add_resource(ItemListAPI, '/items')
+api.add_resource(ItemActionAPI, '/items/<item_id>/buy')
 
 @app.errorhandler(500)
 def internal_error(error):
