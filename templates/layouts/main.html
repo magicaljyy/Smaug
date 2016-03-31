@@ -73,7 +73,7 @@
               <li><a href="{{ url_for('login') }}">Login</a></li>
             {% elif user %}
               <li><a>{{user.email}}</a></li>
-              <li><a>{{user.balance}}</a></li>
+              <li><a>{{user.balance}} <span class="label label-primary" style="background-color:#e44f32">Peanuts</span></a></li>
               <li><a href="{{ url_for('logout') }}">Logout</a></li>
             {% endif %}            
           </ul>
